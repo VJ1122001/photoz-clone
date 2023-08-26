@@ -1,6 +1,5 @@
 package com.example.viruj.photoz.clone;
 
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,16 +7,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
 public class PhotozController {
 
-    public Map<String, Photo> db= new HashMap<>(){{
-        put("1",new Photo("1", "hello.jpg"));
-    }};
+    //constructor injection // same functionality as @Autowired annotation
+    private final PhotozService photozService;
+
+    public PhotozController(PhotozService photozService) {
+        this.photozService = photozService;
+    }
 
     @GetMapping("/")
     public String hello(){
@@ -26,12 +26,12 @@ public class PhotozController {
 
     @GetMapping("/photoz")
     public Collection<Photo> get(){
-        return db.values();
+        return photozService.get();
     }
 
     @GetMapping("/photoz/{id}")
     public Photo get(@PathVariable String id){
-        Photo p=  db.get(id);
+        Photo p=  photozService.get(id);
         if(p== null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return p;
@@ -39,20 +39,16 @@ public class PhotozController {
 
     @DeleteMapping("/photoz/{id}")
     public void delete(@PathVariable String id){
-        Photo p=  db.get(id);
-        db.remove(id);
+
+        Photo p = photozService.remove(id);
         if(p== null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
     }
 
     @PostMapping("/photoz")
     public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
-        Photo p= new Photo();
-        p.setId(UUID.randomUUID().toString());
-        p.setFileName(file.getOriginalFilename());
-        p.setData(file.getBytes());
-        db.put(p.getId(),p);
 
+        Photo p= photozService.save(file.getOriginalFilename(), file.getContentType(), file.getBytes());
         return p;
     }
 }
