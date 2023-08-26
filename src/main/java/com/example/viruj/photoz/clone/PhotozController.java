@@ -9,5 +9,7 @@ public class PhotozController {
     @GetMapping("/")
     public String hello(){
         return "Hello World!";
+
+        // hello
     }
 }
