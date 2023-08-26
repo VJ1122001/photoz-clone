@@ -1,7 +1,8 @@
-package com.example.viruj.photoz.clone;
+package com.example.viruj.photoz.clone.web;
 
+import com.example.viruj.photoz.clone.model.Photo;
+import com.example.viruj.photoz.clone.service.PhotozService;
 import org.springframework.http.*;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;

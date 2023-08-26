@@ -1,4 +1,4 @@
-package com.example.viruj.photoz.clone;
+package com.example.viruj.photoz.clone.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;

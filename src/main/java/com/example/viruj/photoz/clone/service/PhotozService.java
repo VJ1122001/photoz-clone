@@ -1,5 +1,6 @@
-package com.example.viruj.photoz.clone;
+package com.example.viruj.photoz.clone.service;
 
+import com.example.viruj.photoz.clone.model.Photo;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
